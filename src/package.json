@@ -146,7 +146,7 @@
     "start:dev-proxy-fs": "APP_NAME=feature-store START_FEATURE_STORE=true PUBLIC_URL=/ FEATURE_STORE_MFE_DEV=true yarn start:dev-proxy-iframe",
     "start:dev-proxy": "APP_NAME=mlflow MLFLOW_DEV_PROXY_MODE=true yarn start:mfe",
     "start:mfe": "PUBLIC_URL=/ MLFLOW_MFE_DEV=true npm run start:iframe",
-    "build": "craco --max_old_space_size=8192 build",
+    "build": "GENERATE_SOURCEMAP=false craco --max_old_space_size=1536 build",
     "build:fs": "NODE_OPTIONS='--max_old_space_size=8192' scripts/build.sh fs",
     "build:mfe": "APP_NAME=mlflow MLFLOW_MFE_DEV=true yarn build",
     "build:fs:mfe": "APP_NAME=feature-store FEATURE_STORE_MFE_DEV=true yarn build",
