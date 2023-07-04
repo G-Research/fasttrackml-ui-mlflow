@@ -74,7 +74,7 @@ function configureIframeCSSPublicPaths(config, env) {
           cssRule.use
             ?.filter((loaderConfig) => loaderConfig?.loader.match(/\/mini-css-extract-plugin\//))
             .forEach((loaderConfig) => {
-              let publicPath = '/static-files/';
+              let publicPath = '/mlflow/static-files/';
               // eslint-disable-next-line no-param-reassign
               loaderConfig.options = { publicPath };
 

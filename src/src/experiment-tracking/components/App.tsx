@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { HashRouter as Router, Link, NavLink, Switch } from 'react-router-dom';
 import { CompatRouter, CompatRoute as Route } from 'react-router-dom-v5-compat';
 import AppErrorBoundary from '../../common/components/error-boundaries/AppErrorBoundary';
-import { HomePageDocsUrl, Version } from '../../common/constants';
+import { HomePageDocsUrl } from '../../common/constants';
+import { fetchEndpoint } from '../../common/utils/FetchUtils';
 // @ts-expect-error TS(2307): Cannot find module '../../common/static/home-logo.... Remove this comment to see the full error message
 import logo from '../../common/static/home-logo.png';
 import ErrorModal from '../../experiment-tracking/components/modals/ErrorModal';
@@ -47,6 +48,20 @@ const classNames = {
 const InteractionTracker = ({ children }: any) => children;
 
 class App extends Component {
+  state = {
+    version: 'unknown',
+  };
+
+  componentDidMount() {
+    fetch('/version').then((response) => {
+      response.text().then((version) => {
+        this.setState({
+          version: version,
+        });
+      });
+    });
+  }
+
   render() {
     const marginRight = 24;
     return (
@@ -66,7 +81,7 @@ class App extends Component {
                   <Link to={Routes.rootRoute} className='App-mlflow'>
                     <img className='mlflow-logo' alt='MLflow' src={logo} />
                   </Link>
-                  <span className={'mlflow-version'}>{Version}</span>
+                  <span className={'mlflow-version'}>{this.state.version}</span>
                 </div>
                 <div className='header-route-links'>
                   <NavLink
@@ -81,20 +96,14 @@ class App extends Component {
                       <span>Experiments</span>
                     </div>
                   </NavLink>
-                  <NavLink
-                    strict
-                    to={modelListPageRoute}
-                    css={{ marginRight }}
-                    activeStyle={classNames.activeNavLink}
-                    className='header-nav-link header-nav-link-models'
-                  >
-                    <div className='models'>
-                      <span>Models</span>
-                    </div>
-                  </NavLink>
                 </div>
                 <div className='header-links'>
-                  <a href={'https://github.com/mlflow/mlflow'} css={{ marginRight }}>
+                  <a href={'/'} css={{ marginRight }}>
+                    <div className='github'>
+                      <span>Switch UI</span>
+                    </div>
+                  </a>
+                  <a href={'https://github.com/G-Research/fasttrackml'} css={{ marginRight }}>
                     <div className='github'>
                       <span>GitHub</span>
                     </div>
