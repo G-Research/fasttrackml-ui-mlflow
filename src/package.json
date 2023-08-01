@@ -172,7 +172,7 @@
     "prep-deps": ": # magic task to allow yarn ensure-deps plugin prepare dependencies of this package"
   },
   "//": "homepage is hard to configure without resorting to env variables and doesn't play nicely with other webpack settings. This field should be removed.",
-  "homepage": "static-files",
+  "homepage": "/static/mlflow/",
   "browserslist": [
     "defaults"
   ],

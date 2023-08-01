@@ -97,7 +97,7 @@ class App extends Component {
                   </NavLink>
                 </div>
                 <div className='header-links'>
-                  <a href={'/'} css={{ marginRight }}>
+                  <a href={'../'} css={{ marginRight }}>
                     <div className='github'>
                       <span>Switch UI</span>
                     </div>

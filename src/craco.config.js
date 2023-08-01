@@ -13,7 +13,7 @@ const isDevserverWebsocketRequest = (request) =>
   (request.headers.upgrade === 'websocket' || request.headers['sec-websocket-version']);
 
 function mayProxy(pathname) {
-  const publicPrefixPrefix = '/static-files/';
+  const publicPrefixPrefix = '/static/mlflow/';
   if (pathname.startsWith(publicPrefixPrefix)) {
     const maybePublicPath = path.resolve('public', pathname.substring(publicPrefixPrefix.length));
     return !fs.existsSync(maybePublicPath);
@@ -74,7 +74,7 @@ function configureIframeCSSPublicPaths(config, env) {
           cssRule.use
             ?.filter((loaderConfig) => loaderConfig?.loader.match(/\/mini-css-extract-plugin\//))
             .forEach((loaderConfig) => {
-              let publicPath = '/mlflow/static-files/';
+              let publicPath = '/static/mlflow/';
               // eslint-disable-next-line no-param-reassign
               loaderConfig.options = { publicPath };
 
@@ -276,7 +276,7 @@ module.exports = function ({ env }) {
     },
     webpack: {
       configure: (webpackConfig, { env, paths }) => {
-        webpackConfig.output.publicPath = 'static-files/';
+        webpackConfig.output.publicPath = '/static/mlflow/';
         webpackConfig = i18nOverrides(webpackConfig);
         webpackConfig = configureIframeCSSPublicPaths(webpackConfig, env);
         webpackConfig = enableOptionalTypescript(webpackConfig);

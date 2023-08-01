@@ -4,6 +4,19 @@ import yaml from 'js-yaml';
 import _ from 'lodash';
 import { ErrorWrapper } from './ErrorWrapper';
 
+interface GlobalScope extends Window {
+  API_BASE_PATH?: string;
+}
+
+let globalScope: GlobalScope;
+
+try {
+  globalScope = window;
+} catch (ex) {
+  /* eslint-disable-next-line no-restricted-globals */
+  globalScope = self;
+}
+
 export const HTTPMethods = {
   GET: 'GET',
   POST: 'POST',
@@ -49,7 +62,7 @@ export const getAjaxUrl = (relativeUrl: any) => {
   if (process.env.USE_ABSOLUTE_AJAX_URLS === 'true' && !relativeUrl.startsWith('/')) {
     return '/' + relativeUrl;
   }
-  return relativeUrl;
+  return globalScope.API_BASE_PATH + relativeUrl;
 };
 
 // return response json by default, if response is not parsable to json,
