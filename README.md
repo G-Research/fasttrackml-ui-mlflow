@@ -1,3 +1,5 @@
+[![FastTrackML banner](https://fasttrackml.io/images/github-banner.svg)](https://fasttrackml.io/)
+
 # fasttrackml-ui-mlflow
 
 Classic MLFlow UI built for FastTrackML

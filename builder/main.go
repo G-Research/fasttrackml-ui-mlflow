@@ -26,6 +26,10 @@ func main() {
 	}
 	defer client.Close()
 
+	if err := os.RemoveAll(dst); err != nil {
+		log.Fatalln(err)
+	}
+
 	_, err = client.Pipeline("build").
 		Container().
 		From("node:16").
@@ -37,7 +41,9 @@ func main() {
 		WithWorkdir("/src").
 		WithExec([]string{"yarn", "install", "--immutable"}).
 		WithDirectory("/src",
-			client.Host().Directory(src),
+			client.Host().Directory(src, dagger.HostDirectoryOpts{
+				Exclude: []string{"node_modules", ".yarn"},
+			}),
 		).
 		WithExec([]string{"yarn", "build"}).
 		Directory("build").
