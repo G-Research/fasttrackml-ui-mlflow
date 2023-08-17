@@ -5,8 +5,7 @@ import { CompatRouter, CompatRoute as Route } from 'react-router-dom-v5-compat';
 import AppErrorBoundary from '../../common/components/error-boundaries/AppErrorBoundary';
 import { HomePageDocsUrl } from '../../common/constants';
 import { fetchEndpoint } from '../../common/utils/FetchUtils';
-// @ts-expect-error TS(2307): Cannot find module '../../common/static/home-logo.... Remove this comment to see the full error message
-import logo from '../../common/static/home-logo.png';
+import logo from '../../common/static/home-logo.svg';
 import ErrorModal from '../../experiment-tracking/components/modals/ErrorModal';
 import { CompareModelVersionsPage } from '../../model-registry/components/CompareModelVersionsPage';
 import { ModelListPage } from '../../model-registry/components/ModelListPage';
