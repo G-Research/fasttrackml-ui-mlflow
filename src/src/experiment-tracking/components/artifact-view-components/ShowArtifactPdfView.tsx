@@ -10,7 +10,7 @@ import { ErrorWrapper } from '../../../common/utils/ErrorWrapper';
 
 // See: https://github.com/wojtekmaj/react-pdf/blob/master/README.md#enable-pdfjs-worker for how
 // workerSrc is supposed to be specified.
-pdfjs.GlobalWorkerOptions.workerSrc = `./static-files/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `/static/mlflow/pdf.worker.js`;
 
 type OwnProps = {
   runUuid: string;
