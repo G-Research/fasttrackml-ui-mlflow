@@ -284,9 +284,6 @@ module.exports = function ({ env }) {
         return webpackConfig;
       },
       plugins: [
-        new webpack.DefinePlugin({
-          'process.env.HOSTED_PATH': JSON.stringify(''),
-        }),
         new webpack.EnvironmentPlugin({
           HIDE_HEADER: process.env.HIDE_HEADER ? 'true' : 'false',
           HIDE_EXPERIMENT_LIST: process.env.HIDE_EXPERIMENT_LIST ? 'true' : 'false',
