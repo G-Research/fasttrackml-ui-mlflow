@@ -17,6 +17,10 @@ try {
   globalScope = self;
 }
 
+export const getBasePath = () => {
+  return `${globalScope.API_BASE_PATH}`;
+};
+
 export const HTTPMethods = {
   GET: 'GET',
   POST: 'POST',
@@ -62,7 +66,7 @@ export const getAjaxUrl = (relativeUrl: any) => {
   if (process.env.USE_ABSOLUTE_AJAX_URLS === 'true' && !relativeUrl.startsWith('/')) {
     return '/' + relativeUrl;
   }
-  return globalScope.API_BASE_PATH + relativeUrl;
+  return getBasePath() + relativeUrl;
 };
 
 // return response json by default, if response is not parsable to json,

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getBasePath } from '../../../common/utils/FetchUtils';
 import {
   getExtension,
   IMAGE_EXTENSIONS,
@@ -147,12 +148,10 @@ const getFileTooLargeView = () => {
 };
 
 export const getSrc = (path: any, runUuid: any) => {
-  // @ts-expect-error TS(4111): Property 'HOSTED_PATH' comes from an index signatu... Remove this comment to see the full error message
-  const basePath = process.env.HOSTED_PATH || '';
-  const endpointPath = 'get-artifact';
-  return `${basePath}${endpointPath}?path=${encodeURIComponent(path)}&run_uuid=${encodeURIComponent(
-    runUuid,
-  )}`;
+  const endpointPath = 'ajax-api/2.0/mlflow/artifacts/get';
+  return `${getBasePath()}${endpointPath}?path=${encodeURIComponent(
+    path,
+  )}&run_uuid=${encodeURIComponent(runUuid)}`;
 };
 
 export default ShowArtifactPage;
