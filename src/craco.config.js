@@ -12,7 +12,7 @@ const isDevserverWebsocketRequest = (request) =>
   (request.headers.upgrade === 'websocket' || request.headers['sec-websocket-version']);
 
 function mayProxy(pathname) {
-  const publicPrefixPrefix = '/static-files/';
+  const publicPrefixPrefix = '/static/mlflow/';
   if (pathname.startsWith(publicPrefixPrefix)) {
     const maybePublicPath = path.resolve('public', pathname.substring(publicPrefixPrefix.length));
     return !fs.existsSync(maybePublicPath);
@@ -72,7 +72,7 @@ function configureIframeCSSPublicPaths(config, env) {
           cssRule.use
             ?.filter((loaderConfig) => loaderConfig?.loader.match(/[\/\\]mini-css-extract-plugin[\/\\]/))
             .forEach((loaderConfig) => {
-              loaderConfig.options = { publicPath: '../../' };
+              loaderConfig.options = { publicPath: '/static/mlflow/' };
               cssRuleFixed = true;
             });
         });
@@ -292,7 +292,7 @@ module.exports = function () {
     },
     webpack: {
       configure: (webpackConfig, { env }) => {
-        webpackConfig.output.publicPath = 'static-files/';
+        webpackConfig.output.publicPath = '/static/mlflow/';
         webpackConfig = i18nOverrides(webpackConfig);
         webpackConfig = configureIframeCSSPublicPaths(webpackConfig, env);
         webpackConfig = enableOptionalTypescript(webpackConfig);

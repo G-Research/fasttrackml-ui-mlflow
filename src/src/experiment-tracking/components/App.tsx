@@ -18,8 +18,9 @@ import {
 } from '../../common/utils/RoutingUtils';
 
 import AppErrorBoundary from '../../common/components/error-boundaries/AppErrorBoundary';
-import { HomePageDocsUrl, Version } from '../../common/constants';
-import logo from '../../common/static/home-logo.png';
+import { HomePageDocsUrl } from '../../common/constants';
+import { fetchEndpoint } from '../../common/utils/FetchUtils';
+import logo from '../../common/static/home-logo.svg';
 import ErrorModal from '../../experiment-tracking/components/modals/ErrorModal';
 import { CompareModelVersionsPage } from '../../model-registry/components/CompareModelVersionsPage';
 import { ModelListPage } from '../../model-registry/components/ModelListPage';
@@ -55,6 +56,20 @@ const classNames = {
 const InteractionTracker = ({ children }: any) => children;
 
 class App extends Component {
+  state = {
+    version: 'unknown',
+  };
+
+  componentDidMount() {
+    fetch('/version').then((response) => {
+      response.text().then((version) => {
+        this.setState({
+          version: version,
+        });
+      });
+    });
+  }
+
   render() {
     const marginRight = 24;
     return (
@@ -74,7 +89,7 @@ class App extends Component {
                   <LinkV5 to={ExperimentTrackingRoutes.rootRoute} className='App-mlflow'>
                     <img className='mlflow-logo' alt='MLflow' src={logo} />
                   </LinkV5>
-                  <span className={'mlflow-version'}>{Version}</span>
+                  <span className={'mlflow-version'}>{this.state.version}</span>
                 </div>
                 <div className='header-route-links'>
                   <NavLinkV5
@@ -89,20 +104,14 @@ class App extends Component {
                       <span>Experiments</span>
                     </div>
                   </NavLinkV5>
-                  <NavLinkV5
-                    strict
-                    to={ModelRegistryRoutes.modelListPageRoute}
-                    css={{ marginRight }}
-                    activeStyle={classNames.activeNavLink}
-                    className='header-nav-link header-nav-link-models'
-                  >
-                    <div className='models'>
-                      <span>Models</span>
-                    </div>
-                  </NavLinkV5>
                 </div>
                 <div className='header-links'>
-                  <a href={'https://github.com/mlflow/mlflow'} css={{ marginRight }}>
+                  <a href={'../'} css={{ marginRight }}>
+                    <div className='github'>
+                      <span>Switch UI</span>
+                    </div>
+                  </a>
+                  <a href={'https://github.com/G-Research/fasttrackml'} css={{ marginRight }}>
                     <div className='github'>
                       <span>GitHub</span>
                     </div>

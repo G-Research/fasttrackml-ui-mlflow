@@ -13,13 +13,8 @@ import { useExperimentIds } from './hooks/useExperimentIds';
 import { useExperiments } from './hooks/useExperiments';
 import { useFetchExperiments } from './hooks/useFetchExperiments';
 import { useElementHeight } from '../../../common/utils/useElementHeight';
-import { useAsyncDispatch } from './hooks/useAsyncDispatch';
-import { searchDatasetsApi } from '../../actions';
-import Utils from '../../../common/utils/Utils';
 
 export const ExperimentView = () => {
-  const dispatch = useAsyncDispatch();
-
   const experimentIds = useExperimentIds();
   const experiments = useExperiments(experimentIds);
 
@@ -34,13 +29,6 @@ export const ExperimentView = () => {
   useEffect(() => {
     fetchExperiments(experimentIds);
   }, [fetchExperiments, experimentIds]);
-
-  useEffect(() => {
-    const requestAction = searchDatasetsApi(experimentIds);
-    dispatch(requestAction).catch((e) => {
-      Utils.logErrorAndNotifyUser(e);
-    });
-  }, [dispatch, experimentIds]);
 
   const isComparingExperiments = experimentIds.length > 1;
 

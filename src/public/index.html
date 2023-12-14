@@ -3,14 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="shortcut icon" href="./static-files/favicon.ico" />
+    <link rel="shortcut icon" href="/static/mlflow/favicon.ico" />
     <meta name="theme-color" content="#000000" />
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="./static-files/manifest.json" />
-    <title>MLflow</title>
+    <link rel="manifest" href="/static/mlflow/manifest.json" />
+    <title>FastTrackML (classic)</title>
+    <script>
+      const found = window.location.pathname.match(/^(\/ns\/[^/]+\/)mlflow/);
+      window.API_BASE_PATH = found ? found[1] : '/';
+    </script>
   </head>
 
   <body>
