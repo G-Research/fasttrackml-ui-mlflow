@@ -43,7 +43,7 @@ export const LoggingRunsDocUrl = `${DOCS_ROOT}/tracking.html#logging-data-to-run
 
 export const onboarding = 'onboarding';
 
-export const SupportPageUrl = 'https://github.com/mlflow/mlflow/issues';
+export const SupportPageUrl = 'https://github.com/G-Research/fasttrackml/issues';
 
 export const ModelSignatureUrl = `${DOCS_ROOT}/models.html#model-signature`;
 

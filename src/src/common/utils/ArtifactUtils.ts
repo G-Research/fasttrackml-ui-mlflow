@@ -6,7 +6,7 @@
  */
 
 import { ErrorWrapper } from './ErrorWrapper';
-import { getDefaultHeaders, HTTPMethods } from './FetchUtils';
+import { getBasePath, getDefaultHeaders, HTTPMethods } from './FetchUtils';
 
 /**
  * Async function to fetch and return the specified artifact blob from response.
@@ -111,7 +111,7 @@ export function getArtifactBytesContent(artifactLocation: any) {
 }
 
 export const getArtifactLocationUrl = (path: string, runUuid: string) => {
-  const artifactEndpointPath = 'get-artifact';
+  const artifactEndpointPath = `${getBasePath()}ajax-api/2.0/mlflow/artifacts/get`;
   return `${artifactEndpointPath}?path=${encodeURIComponent(path)}&run_uuid=${encodeURIComponent(
     runUuid,
   )}`;
