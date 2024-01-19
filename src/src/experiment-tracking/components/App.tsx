@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import {
   HashRouterV5,
@@ -19,7 +21,7 @@ import {
 
 import AppErrorBoundary from '../../common/components/error-boundaries/AppErrorBoundary';
 import { HomePageDocsUrl } from '../../common/constants';
-import { fetchEndpoint } from '../../common/utils/FetchUtils';
+import { fetchEndpoint, getBasePath } from '../../common/utils/FetchUtils';
 import logo from '../../common/static/home-logo.svg';
 import ErrorModal from '../../experiment-tracking/components/modals/ErrorModal';
 import { CompareModelVersionsPage } from '../../model-registry/components/CompareModelVersionsPage';
@@ -56,9 +58,29 @@ const classNames = {
 const InteractionTracker = ({ children }: any) => children;
 
 class App extends Component {
-  state = {
-    version: 'unknown',
+  state: {
+    selectedNamespace: string; namespaces: string[];
+    version: string;
   };
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      selectedNamespace: '',
+      namespaces: [],
+      version: 'unknown',
+    };
+    this.handleNamespaceChange = this.handleNamespaceChange.bind(this);
+  }
+
+  handleNamespaceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const value = event.target.value as string;
+    this.setState({ 
+      selectedNamespace: value,
+    }, () => {
+      const namespace = value === 'default' ? '' : `/ns/${value}`;
+      window.location.href = `${window.location.origin}${namespace}/mlflow/`;
+    });
+  }
 
   componentDidMount() {
     fetch('/version').then((response) => {
@@ -68,6 +90,22 @@ class App extends Component {
         });
       });
     });
+
+    fetch(`/admin/namespaces/list`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          namespaces: data.map((item: { code: any }) => item.code),
+        });
+      });
+
+    fetch(`${getBasePath()}admin/namespaces/current`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          selectedNamespace: data.code,
+        });
+      });
   }
 
   render() {
@@ -106,6 +144,18 @@ class App extends Component {
                   </NavLinkV5>
                 </div>
                 <div className='header-links'>
+                <Select 
+                  id="namespace-select"
+                  value={this.state.selectedNamespace} 
+                  onChange={this.handleNamespaceChange}
+                  style={{ marginRight, color: '#e7f1fb' }}
+                >
+                  {this.state.namespaces.map((namespace) => (
+                    <MenuItem value={namespace} key={namespace}>
+                      {namespace}
+                    </MenuItem>
+                  ))}
+                </Select>
                   <a href={'../'} css={{ marginRight }}>
                     <div className='github'>
                       <span>Switch UI</span>
