@@ -146,7 +146,10 @@ class App extends Component {
                   size='small'
                   value={this.state.selectedNamespace} 
                   onChange={this.handleNamespaceChange}
-                  style={{ marginRight, width: 130 }}
+                  style={{ marginRight: 15, color: '#e7f1fb', fontSize: 16 }}
+                  bordered={false}
+                  dropdownMatchSelectWidth={false}
+                  className="namespace-select"
                 >
                   {this.state.namespaces.map((namespace) => (
                     <Select.Option value={namespace}>
