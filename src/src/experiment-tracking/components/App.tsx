@@ -7,8 +7,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Select } from 'antd';
 
 import {
   HashRouterV5,
@@ -65,15 +64,14 @@ class App extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      selectedNamespace: '',
-      namespaces: [],
+      selectedNamespace: 'ns1',
+      namespaces: ['cccccc787493', 'ddd', 'ns1', 'ns2'],
       version: 'unknown',
     };
     this.handleNamespaceChange = this.handleNamespaceChange.bind(this);
   }
 
-  handleNamespaceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const value = event.target.value as string;
+  handleNamespaceChange = (value: string) => {
     this.setState({ 
       selectedNamespace: value,
     }, () => {
@@ -145,15 +143,15 @@ class App extends Component {
                 </div>
                 <div className='header-links'>
                 <Select 
-                  id="namespace-select"
+                  size='small'
                   value={this.state.selectedNamespace} 
                   onChange={this.handleNamespaceChange}
-                  style={{ marginRight, color: '#e7f1fb' }}
+                  style={{ marginRight, width: 130 }}
                 >
                   {this.state.namespaces.map((namespace) => (
-                    <MenuItem value={namespace} key={namespace}>
+                    <Select.Option value={namespace}>
                       {namespace}
-                    </MenuItem>
+                    </Select.Option>
                   ))}
                 </Select>
                   <a href={'../'} css={{ marginRight }}>

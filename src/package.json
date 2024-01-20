@@ -41,7 +41,6 @@
     "@databricks/design-system": "file:./vendor/design-system",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.0",
-    "@material-ui/core": "^4.12.4",
     "@tanstack/react-table": "^8.8.2",
     "@types/react-virtualized": "^9.21.9",
     "antd": "4.16.8",
