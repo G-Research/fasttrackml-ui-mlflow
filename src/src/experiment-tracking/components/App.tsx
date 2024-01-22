@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Select } from 'antd';
 
 import {
   HashRouterV5,
@@ -19,7 +20,7 @@ import {
 
 import AppErrorBoundary from '../../common/components/error-boundaries/AppErrorBoundary';
 import { HomePageDocsUrl } from '../../common/constants';
-import { fetchEndpoint } from '../../common/utils/FetchUtils';
+import { fetchEndpoint, getBasePath } from '../../common/utils/FetchUtils';
 import logo from '../../common/static/home-logo.svg';
 import ErrorModal from '../../experiment-tracking/components/modals/ErrorModal';
 import { CompareModelVersionsPage } from '../../model-registry/components/CompareModelVersionsPage';
@@ -56,9 +57,28 @@ const classNames = {
 const InteractionTracker = ({ children }: any) => children;
 
 class App extends Component {
-  state = {
-    version: 'unknown',
+  state: {
+    selectedNamespace: string; namespaces: string[];
+    version: string;
   };
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      selectedNamespace: '',
+      namespaces: [],
+      version: 'unknown',
+    };
+    this.handleNamespaceChange = this.handleNamespaceChange.bind(this);
+  }
+
+  handleNamespaceChange = (value: string) => {
+    this.setState({ 
+      selectedNamespace: value,
+    }, () => {
+      const namespace = value === 'default' ? '' : `/ns/${value}`;
+      window.location.href = `${window.location.origin}${namespace}/mlflow/`;
+    });
+  }
 
   componentDidMount() {
     fetch('/version').then((response) => {
@@ -68,6 +88,22 @@ class App extends Component {
         });
       });
     });
+
+    fetch(`/admin/namespaces/list`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          namespaces: data.map((item: { code: any }) => item.code),
+        });
+      });
+
+    fetch(`${getBasePath()}admin/namespaces/current`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          selectedNamespace: data.code,
+        });
+      });
   }
 
   render() {
@@ -106,6 +142,21 @@ class App extends Component {
                   </NavLinkV5>
                 </div>
                 <div className='header-links'>
+                <Select 
+                  size='small'
+                  value={this.state.selectedNamespace} 
+                  onChange={this.handleNamespaceChange}
+                  style={{ marginRight: 15, color: '#e7f1fb', fontSize: 16 }}
+                  bordered={false}
+                  dropdownMatchSelectWidth={false}
+                  className="namespace-select"
+                >
+                  {this.state.namespaces.map((namespace) => (
+                    <Select.Option value={namespace}>
+                      {namespace}
+                    </Select.Option>
+                  ))}
+                </Select>
                   <a href={'../'} css={{ marginRight }}>
                     <div className='github'>
                       <span>Switch UI</span>
