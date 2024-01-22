@@ -64,8 +64,8 @@ class App extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      selectedNamespace: 'ns1',
-      namespaces: ['cccccc787493', 'ddd', 'ns1', 'ns2'],
+      selectedNamespace: '',
+      namespaces: [],
       version: 'unknown',
     };
     this.handleNamespaceChange = this.handleNamespaceChange.bind(this);
