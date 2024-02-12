@@ -15,7 +15,25 @@ module.exports = function (app) {
     }),
   );
   app.use(
+    createProxyMiddleware('/admin', {
+      target: proxyTarget,
+      changeOrigin: true,
+    }),
+  );
+  app.use(
     createProxyMiddleware('/version', {
+      target: proxyTarget,
+      changeOrigin: true,
+    }),
+  );
+  app.use(
+    createProxyMiddleware('/ns/*/ajax-api/**', {
+      target: proxyTarget,
+      changeOrigin: true,
+    }),
+  );
+  app.use(
+    createProxyMiddleware('/ns/*/admin/**', {
       target: proxyTarget,
       changeOrigin: true,
     }),
