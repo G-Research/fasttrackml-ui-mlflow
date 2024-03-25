@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Theme } from '@emotion/react';
 import { Button, NewWindowIcon } from '@databricks/design-system';
 import { FormattedMessage } from 'react-intl';
@@ -7,6 +7,8 @@ import { ExperimentViewCopyTitle } from './ExperimentViewCopyTitle';
 import { ExperimentViewHeaderShareButton } from './ExperimentViewHeaderShareButton';
 import { ExperimentEntity } from '../../../../types';
 import { useExperimentPageFeedbackUrl } from '../../hooks/useExperimentPageFeedbackUrl';
+import { getBasePath } from 'common/utils/FetchUtils';
+import { MlflowService } from 'experiment-tracking/sdk/MlflowService';
 
 /**
  * Header for a single experiment page. Displays title, breadcrumbs and provides
@@ -26,12 +28,26 @@ export const ExperimentViewHeader = React.memo(
     );
 
     const feedbackFormUrl = useExperimentPageFeedbackUrl();
+    const [namespace, setNamespace] = useState<string>('');
+
+    useEffect(() => {
+      MlflowService.getCurrentNamespacePath().then(setNamespace);
+    }, []);
+
 
     return (
       <PageHeader
         title={
           <div css={styles.headerWrapper}>
             {normalizedExperimentName} <ExperimentViewCopyTitle experiment={experiment} />{' '}
+              <a href={`${window.location.origin}${namespace}/aim/experiments/${experiment.experiment_id}/overview`} target='_blank' rel='noreferrer'>
+                <Button css={{ marginLeft: 16 }} type='link' size='small'>
+                  <FormattedMessage
+                    defaultMessage='Open in Modern UI'
+                    description='Link to the corresponding experiment in the Aim UI'
+                  />
+                </Button>
+              </a>
             {feedbackFormUrl && (
                 <a href={feedbackFormUrl} target='_blank' rel='noreferrer'>
                   <Button css={{ marginLeft: 16 }} type='link' size='small'>
