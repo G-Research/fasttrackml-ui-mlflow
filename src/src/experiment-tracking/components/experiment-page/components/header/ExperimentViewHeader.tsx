@@ -7,7 +7,6 @@ import { ExperimentViewCopyTitle } from './ExperimentViewCopyTitle';
 import { ExperimentViewHeaderShareButton } from './ExperimentViewHeaderShareButton';
 import { ExperimentEntity } from '../../../../types';
 import { useExperimentPageFeedbackUrl } from '../../hooks/useExperimentPageFeedbackUrl';
-import { getBasePath } from 'common/utils/FetchUtils';
 import { MlflowService } from 'experiment-tracking/sdk/MlflowService';
 
 /**
