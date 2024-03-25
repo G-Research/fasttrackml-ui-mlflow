@@ -171,4 +171,14 @@ export class MlflowService {
    */
   static gatewayProxyGet = (data: { gateway_path: string; json_data?: any }) =>
     getJson({ relativeUrl: 'ajax-api/2.0/mlflow/gateway-proxy', data });
+
+  /**
+   * Get the current namespace path
+   */
+  static getCurrentNamespacePath = () => {
+    return getBigIntJson({ relativeUrl: 'admin/namespaces/current' })
+      .then((data: any) => {
+        return data.code === 'default' ? '' : `/ns/${data.code}`;
+      });
+  };
 }
