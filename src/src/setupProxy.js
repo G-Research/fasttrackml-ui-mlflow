@@ -15,7 +15,7 @@ module.exports = function (app) {
     }),
   );
   app.use(
-    createProxyMiddleware('/admin', {
+    createProxyMiddleware('/chooser', {
       target: proxyTarget,
       changeOrigin: true,
     }),
@@ -33,7 +33,7 @@ module.exports = function (app) {
     }),
   );
   app.use(
-    createProxyMiddleware('/ns/*/admin/**', {
+    createProxyMiddleware('/ns/*/chooser/**', {
       target: proxyTarget,
       changeOrigin: true,
     }),
