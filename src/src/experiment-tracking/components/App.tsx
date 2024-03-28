@@ -89,15 +89,15 @@ class App extends Component {
       });
     });
 
-    fetch(`/admin/namespaces/list`)
-      .then((response) => response.json())
+    fetch(`/chooser/namespaces`)
+    .then((response) => response.json())
       .then((data) => {
         this.setState({
           namespaces: data.map((item: { code: any }) => item.code),
         });
       });
 
-    fetch(`${getBasePath()}admin/namespaces/current`)
+    fetch(`${getBasePath()}chooser/namespaces/current`)
       .then((response) => response.json())
       .then((data) => {
         this.setState({
