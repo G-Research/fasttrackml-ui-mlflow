@@ -440,6 +440,7 @@ export const setTagApi = (runUuid: any, tagName: any, tagValue: any, id = getUUI
   return {
     type: SET_TAG_API,
     payload: MlflowService.setTag({
+      run_id: runUuid,
       run_uuid: runUuid,
       key: tagName,
       value: tagValue,
